@@ -1,0 +1,16 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.available{
+	background-color: rgb(43, 218, 34);
+}
+
+.busy{
+	background-color: rgb(237, 19, 19);
+}
