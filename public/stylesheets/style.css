@@ -1,3 +1,7 @@
+42017.0scale();art
+5.052.2,0scale();artacsetnoc
+noc;xp0022ieh
+;xp002iw
 *{box-sizing: border-box;}
 
 body {
@@ -71,6 +75,7 @@ a {
 #bathroom.container.available > .timer::after{
 	display: block;
 	content: url("../images/icons/door.png");
+	transform: scale(0.5);
 	z-index:100; /*a number that's more than the modal box*/
   left:-50px;
   top:10px;
@@ -78,6 +83,7 @@ a {
 #bathroom.container.busy > .timer::after{
 	display: block;
 	content: url("../images/icons/shower.png");
+	transform: scale(0.7);
 	z-index:100; /*a number that's more than the modal box*/
   left:-50px;
   top:10px;
@@ -86,8 +92,18 @@ a {
 	transform:  translate(-50%, -50%) scale(1.2);
 }
 
-@media only screen and (max-width: 150px){
+@media only screen and (min-width: 1024px){
 	.timer{
-		transform: translateY(0);
+		font-size: 10vw;
+		min-height: 500px;
+	}
+	#bathroom.container.available > .timer::after{
+		transform: scale(1);
+	}
+	#bathroom.container.busy > .timer::after{
+		transform: scale(1);
+	}
+	.timer:hover{
+		transform:  translate(-50%, -50%) scale(0.7);
 	}
 }
