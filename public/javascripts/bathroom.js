@@ -1,17 +1,21 @@
 'use strict';
 
 var app = window.app = {};
-var database = './src/bathroom.json';
 
 app.Bathroom = function(){
+	// elements
+	this._main_e = $('#bathroom');
+	this._timer_e = $('.timer');
+	this._sel_location_e = $('#location option:selected');
 	// costants
 	this.reloadInterval = 1000 * 0.2;
 	this.timer = 15 * 60 * 1000;
+	// variables
 	this.interval = null;
-	// values
+	this.location = this._sel_location_e.val();
 	this.state = {
 		bathroom:{
-			"state": "available",
+			"state": null,
 			"startAt": 0,
 			"currentUser": null,
 		},
@@ -23,13 +27,7 @@ app.Bathroom = function(){
 			{"name":"Romina"},
 		]
 	};
-	this.location = $('#location').val();
-	// elements
-	this._main_e = $('#bathroom');
-	this._timer_e = $('.timer');
-	this._startAt_e = $('#start-at');
-	this._status_e = $('#status');
-	this._location_e = $('#location');
+	// initialize application
 	this._initializer.bind(this)();
 };
 
@@ -44,7 +42,10 @@ app.Bathroom.prototype = {
 		// change status
 		this._main_e.on('click', function(e){
 			e.preventDefault();
+			var currentLocation = $('#location option:selected').val();
 			var newState = {};
+			if(currentLocation === 'kitchen') return false;
+
 			if(this.state.bathroom.state === 'available'){
 				newState = Object.assign({}, this.state, {
 					bathroom: {
@@ -91,7 +92,7 @@ app.Bathroom.prototype = {
 		currentTimer = (currentTimer / 1000) -1;
 		this.interval = setInterval(function () {
 			this._timer_e.text(Math.floor(currentTimer / 60) + ' : ' + Math.floor(currentTimer % 60));
-			currentTimer --;
+			currentTimer > 0 ? currentTimer -- : this._stopTimer();
 		}.bind(this), 1000);
 	},
 
