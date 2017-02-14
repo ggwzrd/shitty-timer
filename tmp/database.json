@@ -1,0 +1,15 @@
+{
+	"bathroom":{
+		"status": "available",
+		"startAt": 0,
+		"currentUser": null,
+	},
+	"roommates":[
+		{"name": "Giulio"},
+		{"name":"Miriam"},
+		{"name":"Marine"},
+		{"name":"Daniele"},
+		{"name":"Romina"},
+	]
+
+}
