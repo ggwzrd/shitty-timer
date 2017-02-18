@@ -16,6 +16,8 @@ router.patch('/state', function(req, res, next) {
 });
 
 router.get('/current-state', function(req, res, next) {
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	console.dir(ip);
 	res.contentType('json');
 	res.send(JSON.stringify(jsonfile.readFileSync(database)));
 });
