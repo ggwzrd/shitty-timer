@@ -1,8 +1,13 @@
 {
+	"currentUser":{
+		"device": null,
+		"username": "Stranger",
+		"lastActivity": null
+	},
   "bathroom": {
     "state": "available",
     "startAt": 0,
-    "currentUser": null
+    "nextUser": {}
   },
   "roommates": [
     {

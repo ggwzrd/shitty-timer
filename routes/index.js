@@ -1,29 +1,23 @@
 var express = require('express');
 var router = express.Router();
+var device = require('express-device');
 var jsonfile = require('jsonfile');
 var database = 'tmp/database.json';
+
+var user = require('../models/users');
 
 // json configurations
 jsonfile.spaces = 2; // n of tabs to use
 
-function authorize(req, res){
-	// get ip client address
-	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-	// get host
-	host = req.headers.host.slice(req.headers.host - 5, -5);
-	// redirect if not in the house
-	if(ip !== '77.170.242.142' && host !== 'localhost') res.redirect('/404');
-};
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	authorize(req, res);
-
+	user._authenticate(req, res);
+	console.dir(req.device);
 	res.render('index', { title: 'Bathroom'});
 });
 
 router.patch('/state', function(req, res, next) {
-	authorize(req, res);
+	user._authenticate(req, res);
 
 	var state = req.body.data;
 	jsonfile.writeFileSync(database, state);
@@ -32,7 +26,7 @@ router.patch('/state', function(req, res, next) {
 });
 
 router.get('/current-state', function(req, res, next) {
-	authorize(req, res);
+	user._authenticate(req, res);
 
 	res.contentType('json');
 	res.send(JSON.stringify(jsonfile.readFileSync(database)));
