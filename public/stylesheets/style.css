@@ -36,7 +36,10 @@ a {
 }
 
 #location{
-	position: relative;
+	position: absolute;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%);
 	display: block;
 	width: auto;
 	height: auto;
@@ -49,6 +52,7 @@ a {
 	border: 1px solid #ffffff;
 	background-color: transparent;
 	color: #ffffff;
+	z-index: 10;
 }
 
 #location:focus,

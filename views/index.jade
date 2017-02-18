@@ -1,12 +1,13 @@
 extends layout.jade
 
 block content
-  script(type='text/javascript').
-    $(function(){
-    	new app.Bathroom();
-    });
-  main#bathroom.container
-    select#location(name='location')
-      option(value='kitchen') Kitchen
-      option(value='bathroom') Bathroom
-    span.timer
+	script(type='text/javascript').
+		$(function(){
+			new app.Bathroom();
+		});
+
+	select#location(name='location')
+		option(value='kitchen') Kitchen
+		option(value='bathroom') Bathroom
+	main#bathroom.container
+		span.timer

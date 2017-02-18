@@ -1,15 +1,29 @@
 {
-	"bathroom":{
-		"status": "available",
-		"startAt": 0,
-		"currentUser": null,
-	},
-	"roommates":[
-		{"name": "Giulio"},
-		{"name":"Miriam"},
-		{"name":"Marine"},
-		{"name":"Daniele"},
-		{"name":"Romina"},
-	]
-
+  "bathroom": {
+    "state": "available",
+    "startAt": 0,
+    "currentUser": null
+  },
+  "roommates": [
+    {
+      "name": "Giulio",
+      "record": 0
+    },
+    {
+      "name": "Miriam",
+      "record": 0
+    },
+    {
+      "name": "Marine",
+      "record": 0
+    },
+    {
+      "name": "Daniele",
+      "record": 0
+    },
+    {
+      "name": "Romina",
+      "record": 0
+    }
+  ]
 }

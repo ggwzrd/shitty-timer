@@ -6,13 +6,13 @@ app.Bathroom = function(){
 	// elements
 	this._main_e = $('#bathroom');
 	this._timer_e = $('.timer');
-	this._sel_location_e = $('#location option:selected');
+	this._sel_location_e = $('#location');
 	// costants
 	this.reloadInterval = 1000 * 0.2;
 	this.timer = 15 * 60 * 1000;
 	// variables
 	this.interval = null;
-	this.location = this._sel_location_e.val();
+	this.location = 'kitchen'
 	this.state = {
 		bathroom:{
 			"state": null,
@@ -34,19 +34,25 @@ app.Bathroom = function(){
 app.Bathroom.prototype = {
 
 	_initializer: function(){
-		// reload the page
+		// listening for changing in the current state (kind of an homemade Socket IO)
+		this._bathroomStatus();
 		setInterval(function () {
 			this._currentState();
 		}.bind(this), this.reloadInterval);
-
 		// change status
 		this._main_e.on('click', function(e){
 			e.preventDefault();
 			var currentLocation = $('#location option:selected').val();
 			var newState = {};
 			if(currentLocation === 'kitchen') return false;
+			this._bathroomStatus();
+		}.bind(this));
+	},
+	_bathroomStatus: function(){
+		var newState = {};
 
-			if(this.state.bathroom.state === 'available'){
+		switch(this.state.bathroom.state){
+			case 'available':
 				newState = Object.assign({}, this.state, {
 					bathroom: {
 						state: 'busy',
@@ -55,7 +61,8 @@ app.Bathroom.prototype = {
 					}
 				});
 				this._updateState(newState);
-			}else{
+				break;
+			case 'busy':
 				newState = Object.assign({}, this.state, {
 					bathroom: {
 						state: 'available',
@@ -64,10 +71,12 @@ app.Bathroom.prototype = {
 					}
 				});
 				this._updateState(newState);
-			}
-		}.bind(this));
+				break;
+			case null:
+				this._currentState();
+				break;
+		};
 	},
-
 	_updateUI: function(bathroom){
 		var available = bathroom.state === 'available';
 		if(available){
@@ -125,8 +134,8 @@ app.Bathroom.prototype = {
   	.done(function(state) {
 			this._updateAppState(state);
   	}.bind(this))
-  	.fail(function(error) {
-	    console.log(error);
+  	.fail(function(res, type, error) {
+	    console.error('update failed: ', error);
   	});
 	},
 
@@ -138,12 +147,14 @@ app.Bathroom.prototype = {
 	    contentType: "application/json",
 	    dataType: "json"
   	})
-  	.done(function(state) {
+  	.done(function(res) {
+			var state = res;
 			if(state.bathroom.state !== this.state.bathroom.state)
 				this._updateAppState(state);
   	}.bind(this))
-  	.fail(function(error) {
-	    console.log(error);
+  	.fail(function(res, type, error) {
+	    console.error('socket failed: ', type, error);
+			console.log('response: ', res);
   	});
 	}
 }
