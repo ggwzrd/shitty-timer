@@ -12,7 +12,7 @@ app.Bathroom = function(){
 	this.timer = 15 * 60 * 1000;
 	// variables
 	this.interval = null;
-	this.location = 'kitchen'
+	this.location = 'bathroom'
 	this.state = {
 		bathroom:{
 			"state": null,
@@ -93,14 +93,15 @@ app.Bathroom.prototype = {
 	_startTimer: function(startAt){
 		startAt = parseInt(startAt, 10);
 		// finding delay
-		var timerStarted = startAt !== 0 ? startAt : Date.now(); // some mock date
-		var now = Date.now();
-		var delay = now - timerStarted // calc delay
-		var currentTimer = this.timer - delay;
-		// converting timer in seconds
-		currentTimer = (currentTimer / 1000) -1;
+		var timerStarted = startAt !== 0 ? startAt : Date.now(), // some mock date
+		now = Date.now(),
+		delay = now - timerStarted, // calc delay
+		currentTimer = ((this.timer - delay)/ 1000) -1, // converting timer in seconds
+		min = 0, sec = 0;
 		this.interval = setInterval(function () {
-			this._timer_e.text(Math.floor(currentTimer / 60) + ' : ' + Math.floor(currentTimer % 60));
+			min = ("0" + Math.floor(currentTimer / 60)).slice(-2),
+			sec = ("0" + Math.floor(currentTimer % 60)).slice(-2);
+			this._timer_e.text(min + ' : ' + sec);
 			currentTimer > 0 ? currentTimer -- : this._stopTimer();
 		}.bind(this), 1000);
 	},
@@ -112,7 +113,7 @@ app.Bathroom.prototype = {
 	},
 
 	_pauseTimer: function(){
-
+		console.warn('WARNING: function not implemented yet');
 	},
 
 	_updateAppState: function(updatedState){

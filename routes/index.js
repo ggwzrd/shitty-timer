@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var jsonfile = require('jsonfile');
-jsonfile.spaces = 2;
 var database = 'tmp/database.json';
+
+// json configurations
+jsonfile.spaces = 2; // n of tabs to use
 
 function authorize(req, res){
 	// get ip client address
@@ -22,7 +24,7 @@ router.get('/', function(req, res, next) {
 
 router.patch('/state', function(req, res, next) {
 	authorize(req, res);
-	
+
 	var state = req.body.data;
 	jsonfile.writeFileSync(database, state);
   res.contentType('json');

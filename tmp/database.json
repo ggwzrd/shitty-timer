@@ -2,7 +2,7 @@
   "bathroom": {
     "state": "available",
     "startAt": 0,
-    "nextUser": {}
+    "currentUser": null
   },
   "roommates": [
     {
