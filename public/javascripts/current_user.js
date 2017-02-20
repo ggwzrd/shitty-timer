@@ -129,6 +129,8 @@ app.CurrentUser.prototype = {
 
 	// save user information to localStorage
 	_saveUser: function(){
+		console.log('Saving to Local Storage:');
+		debugger
 		window.localStorage.setItem('st.bathroom', JSON.stringify({
 			user: this.user,
 			keepUnknown: this.keepUnknown,
