@@ -9,7 +9,6 @@ app.CurrentUser = function(){
 	this.keepUnknown =  !!window.localStorage.keepUnknown ? JSON.parse(window.localStorage.keepUnknown) : false;
 	this.allowGeolocalization = !!window.localStorage.allowGeolocalization ? JSON.parse(window.localStorage.allowGeolocalization) : true;
 
-	console.log(this, window.localStorage);
 	// checking if the position of the user has been already set before
 	if(!!this.user.position){
 		var initGoogleMaps = this._initMap.bind(this, {lat: this.user.position.latitude, lng: this.user.position.longitude}, 19); // initializing Google maps with the position saved of the user
@@ -78,6 +77,7 @@ app.CurrentUser.prototype = {
 			e.preventDefault();
 			this.keepUnknown = $('#keep-unknown').get(0).checked;
 			var permission = $(e.currentTarget).data('value') === 1;
+			console.log(this, window.localStorage);
 			if(permission) return this._askUsername(callback);
 			callback('Stranger');
 
