@@ -82,7 +82,7 @@ app.CurrentUser.prototype = {
 			if(permission) return this._askUsername(callback);
 			callback('Stranger');
 
-			// this._saveUser();
+			this._saveUser();
 			$('.speech-bubble h3').typed({
 			    strings: ["Okay...", "My bad, see you!"],
 			    contentType: 'html', // or 'text'
@@ -118,7 +118,7 @@ app.CurrentUser.prototype = {
 						startDelay: 500,
 				});
 				callback(username);
-				// this._saveUser();
+				this._saveUser();
 				$('#first-time-form').fadeOut();
 				$('#username-form').fadeOut(100);
 				$('.done').fadeOut(100);
