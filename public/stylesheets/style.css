@@ -20,7 +20,14 @@ a {
 .typed-cursor{
 	display: none !important;
 }
-
+.error{
+	color: #aa2121 !important;
+	outline: 1px solid #aa2121;
+	box-shadow: 0 2px 8px rgba(181, 28, 28, 0.7)!important;
+}
+.error:before{
+	border-top-color: #aa2121 !important;
+}
 #bathroom.container{
 	position: relative;
 	display: block;
@@ -133,7 +140,12 @@ a {
 	border: 2px solid #FFF;
 	border-radius: 3px;
 	box-shadow: 0 2px 8px rgba(0,0,0, .5);
-	padding: 10px 40px 10px 40px;
+	padding: 10px 20px;
+	max-width: 55%;
+}
+.speech-bubble h3{
+	max-width: 100%;
+	white-space: pre-line;
 }
 
 .speech-bubble:after, .speech-bubble:before {
@@ -304,8 +316,8 @@ a {
 #username-form:before {
 	border-color: rgba(194, 225, 245, 0);
 	border-top-color: #fff;
-	border-width: 36px;
-	margin-left: -36px;
+	border-width: 31px;
+	margin-left: -31px;
 }
 
 #bottom-button.done{

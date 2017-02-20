@@ -47,7 +47,7 @@ app.CurrentUser.prototype = {
 				this.user.position = {};
 				this.user.position.latitude =  position.coords.latitude;
 				this.user.position.longitude = position.coords.longitude;
-				this._initMap({lat: position.coords.latitude, lng: position.coords.longitude})
+				this._initMap({lat: position.coords.latitude, lng: position.coords.longitude}, 19)
 			}.bind(this));
     } else {
         console.warn('WARNING:', 'This browser doesn\'t support geolocation')
@@ -68,7 +68,7 @@ app.CurrentUser.prototype = {
 			$('.speech-bubble h3').typed({
 			    strings: ["Hey there!<br /> I haven't seen<br />you before", "Do you live here?"],
 			    contentType: 'html', // or 'text'
-					startDelay: 200,
+					startDelay: 500,
 					backDelay: 1500,
 			});
 		});
@@ -97,21 +97,31 @@ app.CurrentUser.prototype = {
 		$('.speech-bubble h3').typed({
 		    strings: ["Me too!", "My mission is help you<br />during your stay here", "How should I call you?"],
 		    contentType: 'html', // or 'text'
+				startDelay: 500,
 				backDelay: 1000,
 		});
-		$('#first-time-form .done').fadeIn();
 		$('#username-form').fadeIn();
 		$('.done').fadeIn();
 		$('.done').on('click', function(e){
 			e.preventDefault();
-			var username = $('#username').val();
-			$('#username-form').fadeOut();
-			$('.done').fadeOut();
-			$('.speech-bubble h3').typed({
-			    strings: ["Welcome in the house "+username+"!"],
-			    contentType: 'html', // or 'text'
-			});
-			callback(username);
+
+			if(!!$('#username').val()){
+				var username = $('#username').val();
+				$('#username-form').fadeOut();
+				$('.done').fadeOut();
+				$('.speech-bubble h3').typed({
+				    strings: ["Welcome in the house "+username+"!"],
+				    contentType: 'html', // or 'text'
+						startDelay: 500,
+				});
+				callback(username);
+
+				$('#first-time-form').fadeOut();
+				$('#username-form').fadeOut(100);
+				$('.done').fadeOut(100);
+			}else{
+				$('#username-form').addClass('error')
+			}
 		});
 	},
 
