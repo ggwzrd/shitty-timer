@@ -5,9 +5,9 @@ var app = window.app;
 app.CurrentUser = function(){
 
 	// initializing the user based on the informations saved in the localStorage
-	this.user = !!window.localStorage.user ? JSON.parse(window.localStorage.user) : {};
-	this.keepUnknown =  !!window.localStorage.keepUnknown ? JSON.parse(window.localStorage.keepUnknown) : false;
-	this.allowGeolocalization = !!window.localStorage.allowGeolocalization ? JSON.parse(window.localStorage.allowGeolocalization) : true;
+	this.user = !!window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user')) : {};
+	this.keepUnknown =  !!window.localStorage.getItem('keepUnknown') ? JSON.parse(window.localStorage.getItem('keepUnknown')) : false;
+	this.allowGeolocalization = !!window.localStorage.getItem('allowGeolocalization') ? JSON.parse(window.localStorage.getItem('allowGeolocalization')) : true;
 
 	// checking if the position of the user has been already set before
 	if(!!this.user.position){
@@ -77,7 +77,6 @@ app.CurrentUser.prototype = {
 			e.preventDefault();
 			this.keepUnknown = $('#keep-unknown').get(0).checked;
 			var permission = $(e.currentTarget).data('value') === 1;
-			console.log(this, window.localStorage);
 			if(permission) return this._askUsername(callback);
 			callback('Stranger');
 
@@ -128,9 +127,9 @@ app.CurrentUser.prototype = {
 
 	// save user information to localStorage
 	_saveUser: function(){
-		window.localStorage.user = JSON.stringify(this.user);
-		window.localStorage.keepUnknown = this.keepUnknown;
-		window.localStorage.allowGeolocalization = this.allowGeolocalization;
+		window.localStorage.setItem('user',JSON.stringify(this.user));
+		window.localStorage.setItem('keepUnknown',this.keepUnknown);
+		window.localStorage.setItem('allowGeolocalization',this.allowGeolocalization);
 	},
 
 	// wait for Google api to load
@@ -161,7 +160,7 @@ app.CurrentUser.prototype = {
 
 	// reset current user in localStorage
 	_reset: function(){
-		// window.removeEventListener('beforeunload', this._saveUser.bind(this));
+		window.removeEventListener('beforeunload', this._saveUser.bind(this));
 		this.user = {};
 		this.keepUnknown = false;
 		this.allowGeolocalization = true;
