@@ -12,7 +12,7 @@ jsonfile.spaces = 2; // n of tabs to use
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	user._authenticate(req, res);
-	console.dir(req.device);
+	
 	res.render('index', { title: 'Bathroom'});
 });
 

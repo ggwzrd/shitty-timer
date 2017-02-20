@@ -1,6 +1,6 @@
 'use strict';
 
-var app = window.app = {};
+var app = window.app;
 
 app.Bathroom = function(){
 	// elements

@@ -24,7 +24,40 @@ html
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Indie+Flower|Poiret+One")
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', type='text/javascript')
+		script(type='text/javascript', src="../vendor/typed.js")
+		script(type='text/javascript', src='../javascripts/initialize.js')
+		script(type='text/javascript', src='../javascripts/current_user.js')
 		script(type='text/javascript', src='../javascripts/bathroom.js')
 		
 	body
+		section#first-time-form
+			div.heading
+				img(src="images/man.png")
+				div.speech-bubble
+					h3 Hey there! <br/>
+						| Do you live here?
+			div#map
+			div.keep-unknown-container
+				input(type="checkbox" name="keep-unknown" id="keep-unknown" value="1")
+				label(class="unknown" for="keep-unknown" alt="Remain Anonymous") Remain Anonymous
+			div.controls
+				a.permission(href="#", data-value="1") Yes
+				a.permission(href="#", data-value="0") No
+				
+		div#username-form
+			input(type="text", id="username" name="username" placeholder="Giulio")
+		
+		a#bottom-button.done(href="#") done
+				
+				
+		script(type='text/javascript').
+			$(function(){
+				new app.CurrentUser();
+				$('.speech-bubble h3').typed({
+				    strings: ["Hey there! I have never seen you before", "Do you live here?"],
+				    contentType: 'text' // or 'html'
+				});
+			});
+		
+		script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIM3rGtFnMAYBEnnq_josyrF7yUeKywNI", async defer)
 		block content
