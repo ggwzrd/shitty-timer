@@ -27,7 +27,7 @@ app.CurrentUser.prototype = {
 		// save user details when exiting the page
 		window.addEventListener('beforeunload', this._saveUser.bind(this));
 		// for mobile
-		window.addEventListener("pageshow", this._saveUser.bind(this), false);
+		window.addEventListener("pagehide", this._saveUser.bind(this), false);
 
 		// check if first visit
 		if(this._firstTime()){
@@ -82,6 +82,7 @@ app.CurrentUser.prototype = {
 			if(permission) return this._askUsername(callback);
 			callback('Stranger');
 
+			// this._saveUser();
 			$('.speech-bubble h3').typed({
 			    strings: ["Okay...", "My bad, see you!"],
 			    contentType: 'html', // or 'text'
@@ -117,7 +118,7 @@ app.CurrentUser.prototype = {
 						startDelay: 500,
 				});
 				callback(username);
-
+				// this._saveUser();
 				$('#first-time-form').fadeOut();
 				$('#username-form').fadeOut(100);
 				$('.done').fadeOut(100);
@@ -130,7 +131,6 @@ app.CurrentUser.prototype = {
 	// save user information to localStorage
 	_saveUser: function(){
 		console.log('Saving to Local Storage:');
-		debugger
 		window.localStorage.setItem('st.bathroom', JSON.stringify({
 			user: this.user,
 			keepUnknown: this.keepUnknown,
