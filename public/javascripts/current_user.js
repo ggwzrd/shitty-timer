@@ -5,10 +5,10 @@ var app = window.app;
 app.CurrentUser = function(){
 
 	// initializing the user based on the informations saved in the localStorage
-	this.user = !!window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user')) : {};
-	this.keepUnknown =  !!window.localStorage.getItem('keepUnknown') ? JSON.parse(window.localStorage.getItem('keepUnknown')) : false;
-	this.allowGeolocalization = !!window.localStorage.getItem('allowGeolocalization') ? JSON.parse(window.localStorage.getItem('allowGeolocalization')) : true;
-
+	var cookies = JSON.parse(window.localStorage.getItem('st.bathroom')) || {};
+	this.user = cookies.user || {};
+	this.keepUnknown =  cookies.keepUnknown || false;
+	this.allowGeolocalization = cookies.allowGeolocalization || true;
 	// checking if the position of the user has been already set before
 	if(!!this.user.position){
 		var initGoogleMaps = this._initMap.bind(this, {lat: this.user.position.latitude, lng: this.user.position.longitude}, 19); // initializing Google maps with the position saved of the user
@@ -26,6 +26,8 @@ app.CurrentUser.prototype = {
 
 		// save user details when exiting the page
 		window.addEventListener('beforeunload', this._saveUser.bind(this));
+		// for mobile
+		window.addEventListener("pageshow", this._saveUser.bind(this), false);
 
 		// check if first visit
 		if(this._firstTime()){
@@ -127,9 +129,11 @@ app.CurrentUser.prototype = {
 
 	// save user information to localStorage
 	_saveUser: function(){
-		window.localStorage.setItem('user',JSON.stringify(this.user));
-		window.localStorage.setItem('keepUnknown',this.keepUnknown);
-		window.localStorage.setItem('allowGeolocalization',this.allowGeolocalization);
+		window.localStorage.setItem('st.bathroom', JSON.stringify({
+			user: this.user,
+			keepUnknown: this.keepUnknown,
+			allowGeolocalization: this.allowGeolocalization
+		}));
 	},
 
 	// wait for Google api to load
