@@ -160,6 +160,10 @@ app.CurrentUser.prototype = {
 
 	// reset current user in localStorage
 	_reset: function(){
-		window.removeEventListener('beforeunload', this._saveUser.bind(this));
+		// window.removeEventListener('beforeunload', this._saveUser.bind(this));
+		this.user = {};
+		this.keepUnknown = false;
+		this.allowGeolocalization = true;
+		debugger;
 	}
 }
