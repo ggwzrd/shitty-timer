@@ -125,7 +125,7 @@ app.CurrentUser.prototype = {
 			}else{
 				$('#username-form').addClass('error')
 			}
-		});
+		}.bind(this));
 	},
 
 	// save user information to localStorage
